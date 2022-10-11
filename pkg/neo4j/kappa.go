@@ -1,8 +1,7 @@
 package neo4j
 
 import (
-	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	util "https://github.com/ijh4565/kafka_neo/util"
+	util "https://github.com/ijh4565/kafka_neo/pkg/util"
 )
 
 func CreateItemKappa(tx neo4j.Transaction, con util.Info) error {
@@ -18,14 +17,14 @@ func CreateItemKappa(tx neo4j.Transaction, con util.Info) error {
 	return nil
 }
 
-func Neo4jWriteKappa(driver neo4j.Driver) {
+func Neo4jWriteKappa(driver neo4j.Driver, info util.Info) {
 
 	defer driver.Close()
 
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()
 
-	result, err := session.WriteTransaction(CreateItemKappa)
+	result, err := session.WriteTransaction(CreateItemKappa(info))
 	if err != nil {
 		panic(err)
 	}

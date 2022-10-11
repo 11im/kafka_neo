@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	util "https://github.com/ijh4565/kafka_neo/util"
-	neo "https://github.com/ijh4565/kafka_neo/neo4j"
+	util "https://github.com/ijh4565/kafka_neo/pkg/util"
+	neo "https://github.com/ijh4565/kafka_neo/pkg/neo4j"
 	"github.com/Shopify/sarama"
 )
 
