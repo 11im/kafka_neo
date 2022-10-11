@@ -20,7 +20,7 @@ func Neo4jWriteKappa(driver neo4j.Driver, info util.Info) {
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()
 
-	result, err := session.RunRun("CREATE (n:Node {id: $id, name: $name })", map[string]interface{}{
+	result, err := session.Run("CREATE (n:Node {id: $id, name: $name })", map[string]interface{}{
 		"id":   con.Node1.Id,
 		"name": con.Node1.Name,
 	})

@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	util "https://github.com/ijh4565/kafka_neo/pkg/util"
-	neo "https://github.com/ijh4565/kafka_neo/pkg/neo4j"
+
 	"github.com/Shopify/sarama"
+	util "github.com/ijh4565/kafka_neo/pkg/util"
 )
 
 func ConsumePartitionLambda(topic string) {

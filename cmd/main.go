@@ -1,19 +1,18 @@
 package main
 
-import(
+import (
 	"fmt"
 	"os"
-	kafka "https://github.com/ijh4565/kafka_neo/pkg/kafka"
-	neo "https://github.com/ijh4565/kafka_neo/pkg/neo4j"
+
+	kafka "github.com/ijh4565/kafka_neo/pkg/kafka"
 )
 
-
-func main(){
+func main() {
 	flag := os.Args[1]
 
-	if flag == "K"{
+	if flag == "K" {
 		kafka.Kappa("neo_connect")
-	} else if flag == "L"{
+	} else if flag == "L" {
 		kafka.Lambda("neo_connect")
 	} else {
 		fmt.Println("----------")
