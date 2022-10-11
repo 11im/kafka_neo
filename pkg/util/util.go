@@ -18,7 +18,6 @@ type Info struct {
 	Node1 Node
 	Node2 Node
 	Edge  Edge
-	Time  int `json:"time"`
 }
 
 func JsonConvert(input []byte) Info {

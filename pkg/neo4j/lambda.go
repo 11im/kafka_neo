@@ -1,8 +1,8 @@
 package neo4j
 
 import (
+	util "github.com/ijh4565/kafka_neo/util"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	util "https://github.com/ijh4565/kafka_neo/util"
 )
 
 func CreateItemLamdba(tx neo4j.Transaction, con util.Info) error {
