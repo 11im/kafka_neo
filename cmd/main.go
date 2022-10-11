@@ -15,5 +15,11 @@ func main(){
 		kafka.Kappa("neo_connect")
 	} else if flag == "L"{
 		kafka.Lambda("neo_connect")
+	} else {
+		fmt.Println("----------")
+		fmt.Println("-Use with Flag-")
+		fmt.Println("-K : kappa-")
+		fmt.Println("-L : lambda-")
+		fmt.Println("----------")
 	}
 }
