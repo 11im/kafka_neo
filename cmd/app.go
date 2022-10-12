@@ -11,6 +11,7 @@ func Kappa() {
 	client := neo.Neo4JClient("neo4j", "neo4j1")
 	wg.Add(1)
 	go kafka.ConsumePartitionKappa("neo_connect", client, wg)
+	wg.Wait()
 }
 
 func Lambda() {
