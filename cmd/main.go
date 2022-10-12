@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	kafka "github.com/ijh4565/kafka_neo/pkg/kafka"
 	"os"
 )
 
@@ -10,9 +9,9 @@ func main() {
 	flag := os.Args[1]
 
 	if flag == "K" {
-		kafka.Kappa("neo_connect")
+		Kappa()
 	} else if flag == "L" {
-		kafka.Lambda("neo_connect")
+		Lambda()
 	} else {
 		fmt.Println("----------")
 		fmt.Println("-Use with Flag-")

@@ -1,16 +1,18 @@
 package kafka
 
 import (
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"log"
 	"os"
 	"os/signal"
+	"sync"
 
 	"github.com/Shopify/sarama"
 	neo "github.com/ijh4565/kafka_neo/pkg/neo4j"
 	util "github.com/ijh4565/kafka_neo/pkg/util"
 )
 
-func ConsumePartitionKappa(topic string) {
+func ConsumePartitionKappa(topic string, client neo4j.Driver, wg sync.WaitGroup) {
 	type info util.Info
 	con := CreateConsumer()
 	log.Println("Start Consuming")
@@ -22,7 +24,6 @@ func ConsumePartitionKappa(topic string) {
 
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt)
-	client := neo.Neo4JClient("neo4j", "neo4j1")
 
 ConsumerLoop:
 	for {
@@ -37,4 +38,5 @@ ConsumerLoop:
 			break ConsumerLoop
 		}
 	}
+	wg.Done()
 }

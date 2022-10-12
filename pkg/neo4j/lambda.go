@@ -28,7 +28,7 @@ func Neo4jWriteLambda(driver neo4j.Driver, info util.Info) {
 	log.Println(result)
 }
 
-func Neo4JBatch(driver neo4j.Driver) {
+func Neo4JLambdaBatch(driver neo4j.Driver) {
 
 	defer driver.Close()
 
