@@ -25,6 +25,7 @@ func ConsumePartitionKappa(topic string, client neo4j.Driver, wg sync.WaitGroup)
 
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt)
+	defer wg.Done()
 
 ConsumerLoop:
 	for {
@@ -35,7 +36,6 @@ ConsumerLoop:
 			neo.Neo4jWriteKappa(client, info)
 			log.Println(info)
 		case <-signals:
-			wg.Done()
 			break ConsumerLoop
 		}
 	}

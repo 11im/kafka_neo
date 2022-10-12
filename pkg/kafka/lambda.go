@@ -24,7 +24,7 @@ func ConsumePartitionLambda(topic string, client neo4j.Driver, wg sync.WaitGroup
 
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt)
-
+	defer wg.Done()
 ConsumerLoop:
 	for {
 		select {
@@ -33,7 +33,6 @@ ConsumerLoop:
 			neo.Neo4jWriteLambda(client, info)
 			log.Println(info)
 		case <-signals:
-			wg.Done()
 			break ConsumerLoop
 		}
 	}
