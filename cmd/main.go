@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
-
 	kafka "github.com/ijh4565/kafka_neo/pkg/kafka"
+	"os"
 )
 
 func main() {

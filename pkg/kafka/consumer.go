@@ -6,7 +6,7 @@ import (
 	"github.com/Shopify/sarama"
 )
 
-func KafkaConsumer() sarama.Consumer {
+func CreateConsumer() sarama.Consumer {
 	log.Println("Create Consumer Instance")
 	con, err := sarama.NewConsumer([]string{"localhost:9092"}, nil)
 

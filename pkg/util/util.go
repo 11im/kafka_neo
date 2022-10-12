@@ -11,10 +11,9 @@ type Node struct {
 
 type Edge struct {
 	Weight float32 `json:"weight"`
+	Id     int     `json:"id"`
 }
-
 type Info struct {
-	Id    string `json:"id"`
 	Node1 Node
 	Node2 Node
 	Edge  Edge

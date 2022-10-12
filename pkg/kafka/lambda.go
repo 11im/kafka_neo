@@ -11,7 +11,7 @@ import (
 
 func ConsumePartitionLambda(topic string) {
 	type info util.Info
-	con := KafkaConsumer()
+	con := CreateConsumer()
 	log.Println("Start Consuming")
 	pCon, err := con.ConsumePartition(topic, 0, sarama.OffsetOldest)
 
