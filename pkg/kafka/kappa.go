@@ -1,6 +1,8 @@
 package kafka
 
 import (
+	"fmt"
+	neo "github.com/ijh4565/kafka_neo/pkg/neo4j"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"log"
 	"os"
@@ -8,7 +10,6 @@ import (
 	"sync"
 
 	"github.com/Shopify/sarama"
-	neo "github.com/ijh4565/kafka_neo/pkg/neo4j"
 	util "github.com/ijh4565/kafka_neo/pkg/util"
 )
 
@@ -30,13 +31,12 @@ ConsumerLoop:
 		select {
 		case msg := <-pCon.Messages():
 			info := util.JsonConvert(msg.Value)
-
+			fmt.Println(info)
 			neo.Neo4jWriteKappa(client, info)
-
 			log.Println(info)
 		case <-signals:
+			wg.Done()
 			break ConsumerLoop
 		}
 	}
-	wg.Done()
 }

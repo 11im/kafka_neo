@@ -10,7 +10,6 @@ import (
 
 func Neo4jWriteLambda(driver neo4j.Driver, info util.Info) {
 
-	defer driver.Close()
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()
 
@@ -29,8 +28,6 @@ func Neo4jWriteLambda(driver neo4j.Driver, info util.Info) {
 }
 
 func Neo4JLambdaBatch(driver neo4j.Driver) {
-
-	defer driver.Close()
 
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()

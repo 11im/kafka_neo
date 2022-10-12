@@ -33,8 +33,8 @@ ConsumerLoop:
 			neo.Neo4jWriteLambda(client, info)
 			log.Println(info)
 		case <-signals:
+			wg.Done()
 			break ConsumerLoop
 		}
 	}
-	wg.Done()
 }

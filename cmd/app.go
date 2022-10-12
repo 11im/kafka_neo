@@ -12,6 +12,7 @@ func Kappa() {
 	wg.Add(1)
 	go kafka.ConsumePartitionKappa("neo_connect", client, wg)
 	wg.Wait()
+	defer client.Close()
 }
 
 func Lambda() {
@@ -22,4 +23,5 @@ func Lambda() {
 	go neo.Neo4JLambdaBatch(client)
 
 	wg.Wait()
+	defer client.Close()
 }

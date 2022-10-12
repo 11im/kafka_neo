@@ -8,7 +8,6 @@ import (
 
 func Neo4jWriteKappa(driver neo4j.Driver, info util.Info) {
 
-	defer driver.Close()
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()
 
