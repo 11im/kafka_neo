@@ -31,7 +31,6 @@ ConsumerLoop:
 		case msg := <-pCon.Messages():
 			info := util.JsonConvert(msg.Value)
 			neo.Neo4jWriteLambda(client, info)
-			log.Println(info)
 		case <-signals:
 			break ConsumerLoop
 		}

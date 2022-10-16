@@ -34,7 +34,6 @@ ConsumerLoop:
 			info := util.JsonConvert(msg.Value)
 			fmt.Println(info)
 			neo.Neo4jWriteKappa(client, info)
-			log.Println(info)
 		case <-signals:
 			break ConsumerLoop
 		}
