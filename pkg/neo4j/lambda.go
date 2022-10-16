@@ -24,20 +24,20 @@ func Neo4jWriteLambda(driver neo4j.Driver, info util.Info) {
 	if err != nil {
 		panic(err)
 	}
-	log.Println(result)
+	log.Println("Lambda Insert ", result)
 }
 
 func Neo4JLambdaBatch(driver neo4j.Driver) {
 
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()
-	
+
 	for true {
 		time.Sleep(time.Second * 10)
 		result, err := session.Run("MATCH (n: Person) WITH n.id AS id, COLLECT(n) AS nodelist, COUNT(*) AS count WHERE count > 1 CALL apoc.refactor.mergeNodes(nodelist) YIELD node RETURN count(node)", map[string]interface{}{})
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("Batch : ", result)
+		fmt.Println("Lambda Batch : ", result)
 	}
 }

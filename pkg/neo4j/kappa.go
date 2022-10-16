@@ -22,5 +22,5 @@ func Neo4jWriteKappa(driver neo4j.Driver, info util.Info) {
 	if err != nil {
 		panic(err)
 	}
-	log.Println(result)
+	log.Println("Kappa Insert ", result)
 }

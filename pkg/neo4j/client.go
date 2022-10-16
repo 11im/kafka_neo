@@ -33,13 +33,13 @@ func Neo4jQuery(driver neo4j.Driver) {
 		randRangeName := chars[r1.Intn(len(chars))]
 		randWeight := float64(r1.Intn(5)) + r1.Float64()
 
-		result, err := session.Run("MATCH (n: Person)-[r: follow]->(m: Person) $weight RETURN n.name, m.name", map[string]interface{}{
+		result, err := session.Run("MATCH (n: Person)-[r: follow]->(m: Person) WHERE r.weight < $weight RETURN n.name, m.name", map[string]interface{}{
 			"weight": randWeight,
 		})
 		if err != nil {
 			panic(err)
 		}
-		log.Println(result)
+		log.Println("Q1 ", result)
 
 		result, err = session.Run("MATCH (n: Person) WHERE n.name STARTS WITH $name RETURN n.name", map[string]interface{}{
 			"name": randStartName,
@@ -47,7 +47,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(result)
+		log.Println("Q2 ", result)
 
 		result, err = session.Run("MATCH (n: Person) WHERE n.name ENDS WITH $name RETURN n.name", map[string]interface{}{
 			"name": randEndName,
@@ -55,7 +55,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(result)
+		log.Println("Q3 ", result)
 
 		result, err = session.Run("MATCH (n: Person) WHERE n.name >= $name RETURN n.name", map[string]interface{}{
 			"name": randRangeName,
@@ -63,6 +63,6 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(result)
+		log.Println("Q4 ", result)
 	}
 }
