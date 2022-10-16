@@ -3,6 +3,8 @@ package neo4j
 import (
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"log"
+	"math/rand"
+	"time"
 )
 
 // Neo4J client
@@ -20,16 +22,47 @@ func Neo4jQuery(driver neo4j.Driver) {
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeRead})
 	defer session.Close()
 
-	result, err := session.Run("$Query", map[string]interface{}{
-		"nid1":   info.Node1.Id,
-		"name1":  info.Node1.Name,
-		"nid2":   info.Node2.Id,
-		"name2":  info.Node2.Name,
-		"eid1":   info.Edge.Id,
-		"weight": info.Edge.Weight,
-	})
-	if err != nil {
-		panic(err)
+	for true {
+		time.Sleep(time.Second)
+		s1 := rand.NewSource(time.Now().UnixNano())
+		r1 := rand.New(s1)
+		var chars = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+		randStartName := chars[r1.Intn(len(chars))]
+		randEndName := chars[r1.Intn(len(chars))]
+		randRangeName := chars[r1.Intn(len(chars))]
+		randWeight := float64(r1.Intn(5)) + r1.Float64()
+
+		result, err := session.Run("MATCH (n: Person)-[r: follow]->(m: Person) $weight RETURN n.name, m.name", map[string]interface{}{
+			"weight": randWeight,
+		})
+		if err != nil {
+			panic(err)
+		}
+		log.Println(result)
+
+		result, err = session.Run("MATCH (n: Person) WHERE n.name STARTS WITH $name RETURN n.name", map[string]interface{}{
+			"name": randStartName,
+		})
+		if err != nil {
+			panic(err)
+		}
+		log.Println(result)
+
+		result, err = session.Run("MATCH (n: Person) WHERE n.name ENDS WITH $name RETURN n.name", map[string]interface{}{
+			"name": randEndName,
+		})
+		if err != nil {
+			panic(err)
+		}
+		log.Println(result)
+
+		result, err = session.Run("MATCH (n: Person) WHERE n.name >= $name RETURN n.name", map[string]interface{}{
+			"name": randRangeName,
+		})
+		if err != nil {
+			panic(err)
+		}
+		log.Println(result)
 	}
-	log.Println(result)
 }
