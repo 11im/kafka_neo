@@ -3,7 +3,9 @@ package neo4j
 import (
 	util "github.com/ijh4565/kafka_neo/pkg/util"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
+	"io"
 	"log"
+	"os"
 	"time"
 )
 
@@ -25,11 +27,21 @@ func Neo4jWriteLambda(driver neo4j.Driver, info util.Info) {
 	}
 }
 
-func Neo4JLambdaBatch(driver neo4j.Driver) {
+func Neo4JLambdaBatch(driver neo4j.Driver, batchLogPath string) {
 
 	session := driver.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close()
 	var totalProcessingTime int64 = 0
+
+	logFile, err := os.OpenFile(batchLogPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer logFile.Close()
+
+	multiLogWriter := io.MultiWriter(logFile, os.Stdout)
+	log.SetOutput(multiLogWriter)
+
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
 	for true {
 		time.Sleep(time.Second * 10)
