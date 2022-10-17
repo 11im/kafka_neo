@@ -4,6 +4,7 @@ import (
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -27,7 +28,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		s1 := rand.NewSource(time.Now().UnixNano())
 		r1 := rand.New(s1)
 		var chars = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
+		log.SetOutput(os.Stdout)
 		randStartName := chars[r1.Intn(len(chars))]
 		randEndName := chars[r1.Intn(len(chars))]
 		randRangeName := chars[r1.Intn(len(chars))]
@@ -39,7 +40,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println("Q1 ", result.Record())
+		log.Println("Q1 ", result.Record().Values)
 
 		result, err = session.Run("MATCH (n: Person) WHERE n.name STARTS WITH $name RETURN n.name", map[string]interface{}{
 			"name": randStartName,
@@ -47,7 +48,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println("Q2 ", result.Record())
+		log.Println("Q2 ", result.Record().Values)
 
 		result, err = session.Run("MATCH (n: Person) WHERE n.name ENDS WITH $name RETURN n.name", map[string]interface{}{
 			"name": randEndName,
@@ -55,7 +56,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println("Q3 ", result.Record())
+		log.Println("Q3 ", result.Record().Values)
 
 		result, err = session.Run("MATCH (n: Person) WHERE n.name >= $name RETURN n.name", map[string]interface{}{
 			"name": randRangeName,
@@ -63,15 +64,12 @@ func Neo4jQuery(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		log.Println("Q4 ", result.Record())
+		log.Println("Q4 ", result.Record().Values)
 
-		result, err = session.Run("MATCH (n: Person)-[r: follow]->(m: Person) RETURN count(n), count(r)", map[string]interface{}{
-		})
+		result, err = session.Run("MATCH (n: Person)-[r: follow]->(m: Person) RETURN count(n), count(r)", map[string]interface{}{})
 		if err != nil {
 			panic(err)
 		}
-		log.Println("Q5 ", result.Record())
+		log.Println("Q5 ", result.Record().Values)
 	}
 }
-
-
