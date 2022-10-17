@@ -65,7 +65,7 @@ func Neo4jQuery(driver neo4j.Driver) {
 		}
 		log.Println("Q4 ", result.Record())
 
-		result, err = session.Run("MATCH (n: Person)-[r: follow]->(m: Person) RETURN count(*)", map[string]interface{}{
+		result, err = session.Run("MATCH (n: Person)-[r: follow]->(m: Person) RETURN count(n), count(r)", map[string]interface{}{
 		})
 		if err != nil {
 			panic(err)

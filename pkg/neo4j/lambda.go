@@ -1,7 +1,6 @@
 package neo4j
 
 import (
-	"fmt"
 	util "github.com/ijh4565/kafka_neo/pkg/util"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"log"
@@ -38,6 +37,6 @@ func Neo4JLambdaBatch(driver neo4j.Driver) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("Lambda Batch : ", result.Record())
+		log.Println("Lambda Batch : ", result.Record())
 	}
 }

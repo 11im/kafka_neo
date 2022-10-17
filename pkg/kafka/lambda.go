@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/signal"
 	"sync"
-
 	"github.com/Shopify/sarama"
 	util "github.com/ijh4565/kafka_neo/pkg/util"
 )
